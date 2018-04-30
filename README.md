@@ -41,8 +41,31 @@
 ![install_status][9]
 
 - 创建数据目录:
-	- MongoDB将数据目录存储在`db`目录下。但是这个数据目录不会主动创建，在安装完成后需要创建它。数据目录应该放在根目录下(如: `C:\`或者`D:\`等)。
-  
+	- `MongoDB`将数据目录存储在`db`目录下。但是这个数据目录不会主动创建，在安装完成后需要创建它。数据目录应该放在根目录下(如: `C:\`或者`D:\`等)。
+- 已经在`C`盘安装了`mongodb`，现在让我们创建一个`data`的目录然后在`data`目录里创建`db`目录。
+
+```
+c:\>cd c:\
+
+c:\>mkdir data
+
+c:\>cd data
+
+c:\data>mkdir db
+
+c:\data>cd db
+
+c:\data\db>
+```
+
+- 可以通过`window`的资源管理器中创建这些目录，而不一定通过**命令行**。
+
+- 命令行下运行`MongoDB`服务器:
+- 为了从命令提示符下运行 MongoDB 服务器，你必须从 MongoDB 目录的 bin 目录中执行 mongod.exe 文件。
+```
+C:\mongodb\bin\mongod --dbpath c:\data\db
+```
+
 
 
   [1]: https://www.mongodb.com/download-center#community
