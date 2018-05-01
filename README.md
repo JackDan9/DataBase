@@ -271,5 +271,5 @@ WriteResult({ "nInserted" : 1 })
   [10]: ./images/mongodb_compass.png "mongodb_compass"
   [11]: ./images/installed.png "installed"
   [12]: ./images/install_status.png "install_status"
-  [13]: ./images/mongo_home_1.png "mongo_home"
-  [14]: ./images/Mongo_Home_Sec_1.png "Mongo_Home_Sec"
+  [13]: ./images/mongo_home.png "mongo_home"
+  [14]: ./images/Mongo_Home_Sec.png "Mongo_Home_Sec"
