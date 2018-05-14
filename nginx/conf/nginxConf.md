@@ -112,8 +112,85 @@ events {
 
 ------
 
-## http模块
+## http
+- 语法: `http {}`;
+- 定义: `http`是`nginx`中的一个配置块;
+- 作用: `nginx`的`http`详细配置内容;
 
+### include
+- 语法: `include file | mask;`;
+- 标签: `any`;
+- 作用: 包括另一个`file`, 或者匹配制定的文件`mask`到配置。包含的文件应包含语法正确的指令和块。
+- 默认: `include mime.types;`;
+
+### include(example)
+```
+include mime.types;
+include vhosts/*.conf
+```
+
+### default_type
+- 语法: `default_type application/octet-stream;`;
+- 标签: `http`;
+- 作用: `default_type`属于`HTTP`核心模块指令, 这里设定默认类型为二进制流, 也就是当文件类型未定义时使用这种方式, 例如在没有配置`php`环境, `nginx`是不予解析的。此时, 用浏览器访问`php`文件就会出现下载窗口。
+- 默认: `default_type application/octet-stream;`;
+
+### log_format
+- 语法: `log_format name String ...;`如:
+```
+log_format    main    '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+```
+- 标签: `http`;
+- 作用: 设置`nginx`访问日志格式;
+- 参数:
+    - `$remote_addr`与`$http_x_forwarded_for`:记录客户端`IP`, 
+    - `$remote_user`:记录客户端用户名称, 
+    - `$time_local`:访问时间与时区,
+    - `$request`:记录请求的`URL`与`http`协议,
+    - `$status`:记录请求状态,
+    - `$body_bytes_sent`:记录发送给客户端主题文件的大小,
+    - `$http_referer`:记录从哪个页面链接访问过来的,
+    - `$http_user_agent`:记录客户端浏览器相关信息。
+- 默认值: `log_format combined "...";`
+- 解释: 
+    - `nginx`的`HttpLog`模块指令, 用于指定`Nginx`日志输出格式, 
+    - 在`HTTP`协议中, 有一个表头字段叫`referer`, 使用`URI`格式来表示哪里的链接用了当前网页的资源。通过`referer`可以检测目标访问的来源网页, 如果是资源文件, 可以跟踪到它显示的网页, 一旦检测出来不是本站, 马上进行阻止或者返回指定的页面。
+    - `Http Referer`是header的一部分, 当浏览器向`Web`服务器发送请求的时候, 一般会带上`Referer`, 告诉服务器我是从哪个页面链接过来的, 服务器籍此可以获得一些信息用于处理, `Apache`, `Nginx`, `Lighttpd`三者都支持根据`http referer`实现防盗链, `referer`是目前网站**图片**、**附件**、**`html`**最常用的盗链手段。 
+
+### access_log
+- 语法: `access_log path [format [buffer=size] [gzip[=level]] [flush=time] [if=condition]];`或者`access_log off`;
+- 语法2:
+```
+access_log path [format [buffer=size [flush=time]]];
+access_log path format gzip[=level][buffer=size][flush=time];
+access_log syslog:server=address[,parameter=value][format];
+access_log off;
+```
+- 标签: `http`, `server`, `location`, `if in location`, `limit_except`;
+- 作用: 该`ngx_http_log_module`模块中指定的格式写入请求日志;
+- 默认: `access_log logs/access.log combined;`
+- 参数:
+    - `gzip`: 压缩等级;
+    - `buffer`: 设置内存缓冲区大小;
+    - `flush`: 保存在缓存区中的最长时间.
+- 注意:
+    - 缓冲区大小不能超过对磁盘文件的原子写入大小。对于`FreeBSD`, 这个大小是无限的。
+    - 启用缓冲时, 数据将写入文件;
+    - 如果下一个日志行不适合缓冲区;
+    - 如果缓冲区的数据比flush参数(1.3.10, 1.2.7)指定的久;
+    - 当工作进程重新打开日志文件或者正在关闭时;
+    - `access_log /path/to/log.gz combined gzip flush = 5m`;
+    - 要使`gzip`压缩工作, `nginx`必须使用`zlib`库构建。
+
+### access_log(example)
+```
+log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                '$status $body_bytes_sent "$http_referer" '
+                '"$http_user_agent" "$http_x_forwarded_for"';
+access_log logs/access.log main
+```
 
 ### client_header_buffer_size
 - 语法: `client_header_buffer_size size;`; (szie为存储大小)
