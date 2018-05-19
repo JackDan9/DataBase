@@ -15,6 +15,8 @@
 - 作用: 指定工作衍生进程数(一般等于`CPU`的总数或者总核数两倍);
 - 默认: `work_process 1;`;
 
+------
+
 ## worker_process(example):
 ```
 worker_process 4;
@@ -22,6 +24,8 @@ worker_cpu_affinity 0001 0010 0100 1000;
 ```
 
 - 将工作进程绑定到**`CPU`集合**。每个**`CPU`集合**由允许的CPU的掩码表示。应该为**每个工作进程**定义一个单独的集合。默认情况下，工作进程不绑定到任何的`CPU`。
+
+------
 
 ## 绑定每个工作进程到一个单独的CPU
 ```
@@ -49,6 +53,8 @@ worker_cpu_affinity 0101 1010;
 - 作用: 指定`nginx.pid`的存放路径;
 - 默认: `#pid    logs/nginx.pid;`
 
+------
+
 ## nginx.pid(example)
 ```
 /usr/local/nginx/logs/nginx.pid;
@@ -62,6 +68,8 @@ worker_cpu_affinity 0101 1010;
 - 作用: 指定为`nginx`工作进程改变打开最多**文件描述符**数目的限制。用来在**不重启主进程**的情况下增加限制。
 - 默认: `-`;
 - 如果不设置的话上限就是系统的`ulimit -n`的数字, 一般设置`worker_connections`的`3-4`倍。
+
+------
 
 ## worker_rlimit_nofile(example)
 ```
