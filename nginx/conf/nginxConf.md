@@ -192,6 +192,14 @@ log_format main '$remote_addr - $remote_user [$time_local] "$request" '
 access_log logs/access.log main
 ```
 
+### charset 
+- 语法: `charset charset | off;`;
+- 标签: `http`, `server`, `location`, `if in location`;
+- 作用: 将指定的字符集添加到`"Content-Type"`响应标题字段, 参数`off`取消将字符集添加到`"Content-Type"`响应标题字段;
+- 默认: `charset off;`;
+- 注意: 
+    - 如果此字符集与`source_charset`伪指令中指定的字符集不同, 则执行转换。
+
 ### client_header_buffer_size
 - 语法: `client_header_buffer_size size;`; (szie为存储大小)
 - 标签: `events`;
