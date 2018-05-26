@@ -17,7 +17,7 @@
 
 ![VMwareNetwork][1]
 
-- 然后在"Hardware"选项卡中选择"Ethernet", 在左边"Network connection"框架中有如下三个单选项:
+- 然后在"Hardware"选项卡中选择"Ethernet", 在左边"Network connection"框架中常用配置有如下三个单选项:
 
 ### Bridged(桥接模式)
 - 在桥接模式下, VMware虚拟出来的操作系统就像是**局域网中的一独立的主机**, 它可以**访问网内任何一台机器**。
