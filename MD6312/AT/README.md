@@ -196,6 +196,116 @@ AT+CGACT?
 OK
 ```
 
+## AT+CMHTTPSET
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 该命令用于配置HTTP参数 |
+| 设置命令 | AT+CMHTTPSET=`<server>`,`<port>`,`<request url>` [, `<download_urc>`] |
+| 返回 | 如果成功, 返回: <br /> CONNECT OK <br /> <br /> OK |
+| 参数说明 | server 服务器名或者IP地址 <br /> port 服务器端口 <br /> request url GET或者POST请求URL. <br /> download_urc 可选项, 开启后在使用CMHTTPDL命令的时候会提示下载总长度 |
+
+## AT+CMHTTPSET(Example)
+```
+AT+CMHTTPSET="iot.10086.cn", 80, "/contact-us/"
+
+CONNECT OK
+
+OK
+```
+
+> 注意: 
+> 1. 如果返回结果不为CONNECT OK, 那么不能使用后续HTTP命令。此外HTTP命令不能和ipstart命令混合使用。
+> 2. 只有在单路连接模式下才可以使用HTTP命令, 透传和缓存模式下不可以使用。
+
+## AT+CMHTTPGET
+
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 该命令用于发送HTTP GET 请求 |
+| 执行命令 | AT+CMHTTPGET |
+| 返回 | 如果连接成功, 返回: <br /> CONNECT OK <br /> <br /> OK <br /> 服务器响应; <br /> OK |
+
+## AT+CMHTTPPOST
+
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 该命令用于发送HTTP POST 请求 |
+| 设置命令 | AT+CMHTTPPOST=`<post content>` |
+| 返回 | 如果连接成功, 返回: <br /> CONNECT OK <br /> <br /> OK <br /> 服务器响应; <br /> OK <br /> |
+| 参数说明 | post content: <br /> POST 请求内容 |  
+
+## AT+IPSTART
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 建立TCP或者UDP连接 |
+| 设置命令 | AT+IPSTART=[`<index>`,]`<mode>`,`<IPaddress>/`,`<port>` |
+| 返回 | 如果连接已经存在, 返回 <br /> +CME ERROR: <br /> 连接成功, 返回: <br /> CONNECT OK <br /> `<TCP连接时会返回连接链路信息>` <br /> OK <br /> 连接失败, 返回: <br /> +CME ERROR |
+| 测试命令 | AT+IPSTART=? |
+| 返回 | +IPSTART:[(0~4),]("TCP","UDP"),((0-255).(0-255).(0-255).(0-255)),(0-65536) |
+| 最大响应时间 | 受网络状态影响 |
+| 参数说明 | `<index>` <br /> 0~4 表明连接序号(M6312支持5个SOCKET同时存在)。<br /> 当前仅`AT+CMMUX=1`时, 该参数有效。<br /> 当`AT+CMMUX=0`时, 该参数必须缺省(请参考AT+CMMUX) <br /> `<mode>` <br /> 字符串类型; 表明连接类型 <br /> "TCP"建立TCP连接 <br /> "UDP"建立UDP连接 <br /> `<IP address>` <br /> 字符串类型; 表明远端服务器IP地址 <br /> `<port>` <br /> 远端服务器端口号 |
+
+## AT+IPSTART(Example)
+```
+AT+IPSTART=3,"TCP","183.230.40.150",36000
+CONNECT OK
+OK
+```
+
+> 注意:
+> 如果TCP连接建立成功, 会返回CONNECT OK, 如果连接失败, 会返回CONNECT FAIL。UDP连接建立后, 会返回BIND OK。多路连接模式下最多支持5路连接 
+
+## AT+IPSEND
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 发送TCP或者UDP数据 |
+| 设置命令 | 1. 单路连接时 (+CMMUX=0) <br /> AT+IPSEND <br /> 响应`">"`, 输入数据, 执行`CTRL+Z`来发送, 执行ESC来终止操作 <br /> 注: 该操作当且仅当AT+CMMUX=0时可执行 <br /> 2. 多路连接时(+CMMUX=1) <br /> AT+IPSEND=`<index>` <br /> 响应`">"`, 输入数据, 执行`CTRL+Z`来发送, 执行`ESC`来终止操作; |
+| 返回 | 如果连接存在, 发送成功返回: <br /> SEND OK <br /> OK <br /> 发送失败, 返回: <br /> SEND FAIL <br /> 如果`TCP`或者`UDP`连接主动断开, 返回: <br /> CONNECTION CLOSED |
+| 最大响应时间 | 受网络状态影响 |
+| 参数说明 | `<index>`数字参数; 表明连接序号; 该参数仅适用于`AT+CMMUX=1`,若`AT_CMMUX=0`, 该参数必须缺省 |
+
+## AT+IPSEND(Example)
+```
+AT+CMMUX=1
+OK
+AT+IPSTART=0,"TCP","183.230.40.150",36000
+AT+IPSEND=0
+>HELLO<CRTL-Z>
+Send OK
+```
+
+> 注意: 1. 只有在TCP或者UDP连接建立后才可以发送数据;
+>       2. TCP连接在发送成功后会返回SEND OK, 如果传输16进制数据包含CTRL+Z和ESC特殊字符, 请使用透传或者配置CMIPMODE。
+
+## AT+IPCLOSE
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 关闭TCP或者UDP连接 |
+| 设置命令 | AT+IPCLOSE=[`<index>`] |
+| 返回 | 如果关闭连接成功返回; <br /> OK |
+| 测试命令 | AT+IPCLOSE=? |
+| 返回 | +IPCLOSE: <br /> OK |
+| 最大响应时间 | 300ms |
+| 参数说明 | `<index>` <br /> 数字参数; 表明连接序号 <br /> 单路连接下该参数必须缺省。 |
+
+> 注意:
+> 使用IPSTART命令建立连接, 无论建立是否成功或者超时, 使用完毕后必须使用IPCLOSE释放资源。 
+> 如果服务器主动断开连接, 会返回CONNECTION CLOSED: `<index>`, 也需要主动调用IPCLOSE释放资源。
+
+## AT+CDNSGIP
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 域名解析 |
+| 设置命令 | AT+CNDSGIP=`<domain name>` |
+| 返回 | 返回OK后, 若解析成功: <br /> +CDNSGIP: `<IP address>` <br /> OK |
+| 测试命令 | AT+CNDSGIP=? |
+| 返回 | OK |
+| 最大响应时间 | 14s, 受网络状态影响 |
+| 参数说明 | `<domain name>` <br /> 字符串参数; 表明Internet上注册的域名 <br /> `<IP address>` <br /> 字符串参数; 表明IP地址对应的域名 |
+
+> 注意:
+> 使用前请先激活PDP, 参考AT+CGACT命令。
+
 
 
 
