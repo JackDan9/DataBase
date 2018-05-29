@@ -39,7 +39,37 @@ Pragma: no-cache
 OK
 ```
 
-- 其中
+- 其中[`AT+CMHTTPSET`][1]命令参数中, "api.heclouds.com"为云平台API服务器地址, 80为端口号, 4661184为设备ID, 3表示数据类型为JSON格式。
+- `AT^ONENETPOST`命令参数中, `"{\"temperature\":22.5, \"humidity\":\"95.2%\"}"`为JSON格式的数据,`"api-key:q0Jx
+hgV8h4qKUVfc1n42z=7OAaY="`为Masterkey, 此处填写设备`apikey`亦可。返回数据中, `"errno":0`和`"error":"succ"`表示发送成功; 若`errno`不为0, 则表示发送失败。
+
+## 申请新增设备ID
+```
+AT+CMHTTPSET="api.heclouds.com",80,"/devices"
+
+OK
+
++CMHTTPSET:"183.230.40.33"
+AT^ONENETPOST="{\"title\":\"device3\",\"protocol\":\"EDP\",\"auth_info\":\"abc12345678\",}","api-key:q0JxhgV8h4qKUVfc1n42z=7OAaY="
+
+CONNECT OK
+HTTP/1.1 200 OK
+Date: Fri, 10 Nov 2017 02:36:17 GMT
+Content-Type: application/json
+Content-Length: 58
+Connection: close
+Server: Apache-Coyote/1.1
+Pragma: no-cache
+
+
+{"errno":0,"data":{"device_id":"20375535"},"error":"succ"}
+```
+
+- 其中[`AT+CMHTTPSET`][1]命令参数中, `api.heclouds.com`为云平台API服务器地址, 80为端口号。
+- AT^ONENETPOST命令参数中,`"{\"title\":\"device3\",\"protocol\":\"EDP\",\"auth_info\":\"abc12345678\",}"`表示请求的内容, 其中"device3"为设备名, "EDP"为协议名称, "abc12345678"为鉴权信息;`"api-key:q0JxhgV8h4qKUVfc1n42z=7OAaY="`为Masterkey。返回数据中, `"error":0`表示申请成功, `"20375535"`即为申请的新增设备ID; 若errno不为0, 则表示申请失败。
+
+## AT^ONENETGET
+- 说明: 指令功能是以HTTP协议方式使用平台的API接口从OneNet平台(大众版)获取数据, 使用该命令需要先使用[`AT+CMHTTPSET`][1]设置HTTP连接参数。
 
 
   [1]: https://github.com/JackDan9/DataBase/tree/master/M6312/AT#atcmhttpset
