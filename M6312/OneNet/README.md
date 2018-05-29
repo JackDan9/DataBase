@@ -1,10 +1,7 @@
 # OneNet-AT CommandSet
 
-## AT+CIOTMKEY
-- 说明: 设置M6312
-
 ## AT^ONENETPOST
-- 说明: 指令功能是以HTTP协议方式使用平台的API接口发送数据到OneNet平台(大众版), 使用该命令需要先使用`AT+CMHTTPSET`设置HTTP连接参数。
+- 说明: 指令功能是以HTTP协议方式使用平台的API接口发送数据到OneNet平台(大众版), 使用该命令需要先使用[`AT+CMHTTPSET`][1]设置HTTP连接参数。
 
 | 说明 | 状态参数 |
 | --- | --- |
@@ -43,3 +40,6 @@ OK
 ```
 
 - 其中
+
+
+  [1]: https://github.com/JackDan9/DataBase/tree/master/M6312/AT#atcmhttpset
