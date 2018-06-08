@@ -72,4 +72,9 @@ Pragma: no-cache
 - 说明: 指令功能是以HTTP协议方式使用平台的API接口从OneNet平台(大众版)获取数据, 使用该命令需要先使用[`AT+CMHTTPSET`][1]设置HTTP连接参数。
 
 
+## AT+CIOTIP
+- 服务器域名设置;
+- 说明: 指令功能是查询、设置OneNET服务器域名
+
+
   [1]: https://github.com/JackDan9/DataBase/tree/master/M6312/AT#atcmhttpset
