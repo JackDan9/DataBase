@@ -293,6 +293,7 @@ Send OK
 > 如果服务器主动断开连接, 会返回CONNECTION CLOSED: `<index>`, 也需要主动调用IPCLOSE释放资源。
 
 ## AT+CDNSGIP
+
 | 说明 | 状态参数 |
 | --- | --- |
 | 作用 | 域名解析 |
@@ -306,6 +307,26 @@ Send OK
 > 注意:
 > 使用前请先激活PDP, 参考AT+CGACT命令。
 
+## AT+CMPROMPT
+
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 设置发送数据时是否显示">"和"SEND OK" |
+| 设置命令 | AT+CMPROMPT=`<send prompt>` |
+| 返回 | 成功: OK <br /> 失败: ERROR |
+| 读取命令 | AT+CMPROMPT? |
+| 返回 | +CMPROMPT: `<send prompt>` <br /> OK |
+| 测试命令 | AT+CMPROMPT=? |
+| 返回 | +CMPROMPT:(0,3) <br /> OK |
+| 最大响应时间 | 300ms |
+| 参数说明 | `<send prompt>`数字参数; 表明AT+IPSEND操作后, 是否显示">"和"SEND OK" <br /> 0 发送成功时不显示">", 返回"SEND OK" <br /> 1 发送成功时显示">", 返回"SEND OK" <br /> 2 发送成功时不显示">", 不返回"SEND OK" <br /> 3 发送成功时显示">", 返回"<index>, SEND OK" |
+
+## AT+CMMODE 
+| 说明 | 状态参数 |
+| --- | --- |
+| 作用 | 打开/关闭TCPIP透传模式 |
+| 测试命令 | AT+CMMODE=? |
+| 返回 | +CMMODE:(0,1) <br /> OK |
 
 
 
