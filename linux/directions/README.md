@@ -108,5 +108,54 @@ With no FILE, or when FILE is -, read standard input.
 Examples:
   cat f - g  Output f's contents, then standard input, then g's contents.
   cat        Copy standard input to standard output.
-  
+
 ```
+
+## `lsb_release -a`
+- 作用: FSG(Free Standards Group)组织开发的LSB(Linux Standard Base)标准的一个命令, 用来查看linux兼容性的发行版信息.
+
+## `lsb_release --help`
+- Centos
+```
+[root@bogon ~]# lsb_release --help
+FSG lsb_release v2.0 prints certain LSB (Linux Standard Base) and
+Distribution information.
+
+Usage: lsb_release [OPTION]...
+With no OPTION specified defaults to -v.
+
+Options:
+  -v, --version
+    Display the version of the LSB specification against which the distribution is compliant.
+  -i, --id
+    Display the string id of the distributor.
+  -d, --description
+    Display the single line text description of the distribution.
+  -r, --release
+    Display the release number of the distribution.
+  -c, --codename
+    Display the codename according to the distribution release.
+  -a, --all
+    Display all of the above information.
+  -s, --short
+    Use short output format for information requested by other options (or version if none).
+  -h, --help
+    Display this message.
+```
+- Ubuntu
+```
+jackdan@Docker06:~$ lsb_release --help
+Usage: lsb_release [options]
+
+Options:
+  -h, --help         show this help message and exit
+  -v, --version      show LSB modules this system supports
+  -i, --id           show distributor ID
+  -d, --description  show description of this distribution
+  -r, --release      show release number of this distribution
+  -c, --codename     show code name of this distribution
+  -a, --all          show all of the above information
+  -s, --short        show requested information in short format
+
+```
+
