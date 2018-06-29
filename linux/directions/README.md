@@ -159,3 +159,71 @@ Options:
 
 ```
 
+## `fdisk`
+- 作用: 观察硬盘之实体使用情形与分割硬盘使用。
+
+## `fdisk --help`
+- Ubuntu
+```
+
+Usage:
+ fdisk [options] <disk>      change partition table
+ fdisk [options] -l [<disk>] list partition table(s)
+
+Display or manipulate a disk partition table.
+
+Options:
+ -b, --sector-size <size>      physical and logical sector size
+ -B, --protect-boot            don't erase bootbits when create a new label
+ -c, --compatibility[=<mode>]  mode is 'dos' or 'nondos' (default)
+ -L, --color[=<when>]          colorize output (auto, always or never)
+                                 colors are enabled by default
+ -l, --list                    display partitions end exit
+ -o, --output <list>           output columns
+ -t, --type <type>             recognize specified partition table type only
+ -u, --units[=<unit>]          display units: 'cylinders' or 'sectors' (default)
+ -s, --getsz                   display device size in 512-byte sectors [DEPRECATED]
+     --bytes                   print SIZE in bytes rather than in human readable format
+
+ -C, --cylinders <number>      specify the number of cylinders
+ -H, --heads <number>          specify the number of heads
+ -S, --sectors <number>        specify the number of sectors per track
+
+ -h, --help     display this help and exit
+ -V, --version  output version information and exit
+
+Available columns (for -o):
+ gpt: Device Start End Sectors Size Type Type-UUID Attrs Name UUID
+ dos: Device Start End Sectors Cylinders Size Type Id Attrs Boot End-C/H/S
+      Start-C/H/S
+ bsd: Slice Start End Sectors Cylinders Size Type Bsize Cpg Fsize
+ sgi: Device Start End Sectors Cylinders Size Type Id Attrs
+ sun: Device Start End Sectors Cylinders Size Type Id Flags
+
+For more details see fdisk(8).
+
+```
+- Centos 6.9
+```
+
+fdisk: Usage:
+ fdisk [options] <disk>    change partition table
+ fdisk [options] -l <disk> list partition table(s)
+ fdisk -s <partition>      give partition size(s) in blocks
+
+Options:
+ -b <size>                 sector size (512, 1024, 2048 or 4096)
+ -c                        switch off DOS-compatible mode
+ -h                        print help
+ -u <size>                 give sizes in sectors instead of cylinders
+ -v                        print version
+ -C <number>               specify the number of cylinders
+ -H <number>               specify the number of heads
+ -S <number>               specify the number of sectors per track
+
+```
+
+## `mkfs`
+- 作用: linux格式化磁盘命令
+
+
