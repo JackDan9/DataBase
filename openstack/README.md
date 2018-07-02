@@ -83,5 +83,7 @@
 ### 存储节点(Storage)
 - 安装`Storage`服务。
 
+> https://www.zhihu.com/question/20701277
+
 
 
