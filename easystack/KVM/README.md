@@ -7,7 +7,7 @@
 ------
 
 ## KVM的简史
-- 在上图中, KVM全程是基于内核的虚拟机(Kernel-based Virtual Machine), 它是Linux的一个内核模块, 该内核模块使得Linux变成了一个`Hypervisor`。
+- 在上图中, KVM全称是基于内核的虚拟机(Kernel-based Virtual Machine), 它是Linux的一个内核模块, 该内核模块使得Linux变成了一个`Hypervisor`。
     - 它是由`Quramnet`开发, 该公司于2008年被`Red Hat`收购;
     - 它支持x86(32 and 64位), s390, Powerpc等CPU;
     - 它从Linux 2.6.20 起就作为一模块被包含在Linux内核中;
